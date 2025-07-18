@@ -1,10 +1,10 @@
 ---
-title: Avatar Kubica
+title: avatar_kubica
 emoji: 💻
 colorFrom: indigo
 colorTo: yellow
 sdk: gradio
-sdk_version: 5.29.1
+sdk_version: 5.38.0
 app_file: app.py
 pinned: false
 ---
@@ -12,15 +12,14 @@ pinned: false
 
 This code is in `app.py`
 
-We will deploy to HuggingFace Spaces. Thank you student Robert M for improving these instructions.
+We will deploy to HuggingFace Spaces.
 
-Before you start: remember to update the files in the "me" directory - your LinkedIn profile and summary.txt - so that it talks about you!  
-Also check that there's no README file within the 1_foundations directory. If there is one, please delete it. The deploy process creates a new README file in this directory for you.
+Also check that there's no README file within the main directory. If there is one, please delete it. The deploy process creates a new README file in this directory for you.
 
 1. Visit https://huggingface.co and set up an account  
 2. From the Avatar menu on the top right, choose Access Tokens. Choose "Create New Token". Give it WRITE permissions.
 3. Take this token and add it to your .env file: `HF_TOKEN=hf_xxx` and see note below if this token doesn't seem to get picked up during deployment  
-4. From the 1_foundations folder, enter: `uv run gradio deploy` and if for some reason this still wants you to enter your HF token, then interrupt it with ctrl+c and run this instead: `uv run dotenv -f ../.env run -- uv run gradio deploy` which forces your keys to all be set as environment variables   
+4. From the main folder, enter: `uv run gradio deploy` and if for some reason this still wants you to enter your HF token, then interrupt it with ctrl+c and run this instead: `uv run dotenv -f ../.env run -- uv run gradio deploy` which forces your keys to all be set as environment variables   
 5. Follow its instructions: name it "career_conversation", specify app.py, choose cpu-basic as the hardware, say Yes to needing to supply secrets, provide your openai api key, your pushover user and token, and say "no" to github actions.  
 
 #### Extra note about the HuggingFace token
