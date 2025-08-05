@@ -8,38 +8,103 @@ sdk_version: 5.38.0
 app_file: app.py
 pinned: false
 ---
-# Deployment
 
-This code is in `app.py`
+# Avatar Kubica Deployment Guide
 
-We will deploy to HuggingFace Spaces.
+This repository contains a Gradio app defined in `app.py`, deployed to Hugging Face Spaces:
 
-Also check that there's no README file within the main directory. If there is one, please delete it. The deploy process creates a new README file in this directory for you.
+👉 [Live App](https://huggingface.co/spaces/kubicajuraj/avatar_kubica)
 
-1. Visit https://huggingface.co and set up an account  
-2. From the Avatar menu on the top right, choose Access Tokens. Choose "Create New Token". Give it WRITE permissions.
-3. Take this token and add it to your .env file: `HF_TOKEN=hf_xxx` and see note below if this token doesn't seem to get picked up during deployment  
-4. From the main folder, enter: `uv run gradio deploy` and if for some reason this still wants you to enter your HF token, then interrupt it with ctrl+c and run this instead: `uv run dotenv -f ../.env run -- uv run gradio deploy` which forces your keys to all be set as environment variables   
-5. Follow its instructions: name it "career_conversation", specify app.py, choose cpu-basic as the hardware, say Yes to needing to supply secrets, provide your openai api key, your pushover user and token, and say "no" to github actions.  
+> **Note**: Ensure there is no existing `README.md` in the root directory before deployment. Hugging Face Spaces will automatically generate one for you.
 
-#### Extra note about the HuggingFace token
+---
 
-A couple of students have mentioned the HuggingFace doesn't detect their token, even though it's in the .env file. Here are things to try:   
-1. Restart Cursor   
-2. Rerun load_dotenv(override=True) and use a new terminal (the + button on the top right of the Terminal)   
-3. In the Terminal, run this before the gradio deploy: `$env:HF_TOKEN = "hf_XXXX"`  
-Thank you James and Martins for these tips.  
+## Prerequisites
 
-#### More about these secrets:
+Before setting up the project, make sure you have:
 
-If you're confused by what's going on with these secrets: it just wants you to enter the key name and value for each of your secrets -- so you would enter:  
-`OPENAI_API_KEY`  
-Followed by:  
-`sk-proj-...`  
+1. [UV installed](https://docs.astral.sh/uv/getting-started/installation/)
+2. Installed all dependencies from `requirements.txt`  
+   Run:
+   ```bash
+   uv pip install -r requirements.txt
+   ```
 
-And if you don't want to set secrets this way, or something goes wrong with it, it's no problem - you can change your secrets later:  
-1. Log in to HuggingFace website  
-2. Go to your profile screen via the Avatar menu on the top right  
-3. Select the Space you deployed  
-4. Click on the Settings wheel on the top right  
-5. You can scroll down to change your secrets, delete the space, etc.
+---
+
+## Account Setup
+
+### 1. Resend
+
+- Sign up at [resend.com](https://resend.com/)
+- Generate your API key at [resend.com/api-keys](https://resend.com/api-keys)
+
+### 2. Hugging Face
+
+- Create an account at [huggingface.co](https://huggingface.co/)
+- Go to your profile → **Access Tokens** → **Create New Token** with **WRITE** permissions
+
+### 3. Open API
+
+- Create an account at [openapi](https://platform.openai.com/docs/overview)
+- In the [settings](https://platform.openai.com/settings/organization/api-keys) generate the API key which you will need later
+
+### 4. Huggingface setup
+
+- In your huggingface space setup the secrets:
+  - `OPENAI_API_KEY`
+  - `RESEND_API_KEY`
+  - 
+---
+
+## Local Deployment
+
+1. Create a `.env` file in the root directory with the following content:
+
+    ```env
+    OPENAI_API_KEY=<your-openai-api-key>
+    HF_TOKEN=<your-huggingface-token>
+    RESEND_API_KEY=<your-resend-api-key>
+    ```
+
+2. Run the following command from the project root:
+
+    ```bash
+    uv run gradio deploy
+    ```
+
+    If prompted again for your Hugging Face token, stop the process (`Ctrl + C`) and instead run:
+
+    ```bash
+    uv run dotenv -f ../.env run -- uv run gradio deploy
+    ```
+
+    This ensures all required secrets are loaded from your environment.
+
+3. Follow the interactive deployment instructions:
+    - App name: `avatar_kubica`
+    - Entry file: `app.py`
+    - Hardware: `cpu-basic`
+    - Supply secrets: **Yes**
+    - Provide API keys when prompted
+    - GitHub Actions: **No**
+
+---
+
+## Automatic Deployment (via GitHub Actions)
+
+This repo includes a GitHub Actions workflow named **Deploy Gradio App** that automatically deploys the app whenever changes are pushed to the `main` branch.
+
+### Steps:
+
+1. **One-time setup**: Add the following secrets to your GitHub repository:
+
+    - `HF_TOKEN`
+
+2. Push or merge your changes into the `main` branch.
+
+3. GitHub Actions will trigger the **Deploy Gradio App** workflow automatically. Monitor it to ensure it completes successfully.
+
+---
+
+Happy deploying! 🚀
