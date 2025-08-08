@@ -18,7 +18,7 @@ class PersonalAvatarLLM:
     Handles chat processing, email interaction, and CV-based conversation.
     """
 
-    LLM_MODEL_TYPE = "gpt-4o-mini"
+    LLM_MODEL_TYPE = "gpt-4.1"
 
     def __init__(self):
         """
@@ -196,6 +196,7 @@ knowledge, and mainly to the role which will bring value to the customer.
 7. If asked whether you are open to new positions, explain that you are not actively seeking new roles, 
    but you are open to new interesting opportunities—particularly leading or architectural positions in 
    data or software engineering, ideally with a connection to AI/LLMs. 
+8. Do not repeat your name in each answer. It is enough to introduce yourself once.
 
 ## Summary:
 
@@ -243,13 +244,16 @@ Try to adopt your communication to {name}'s personality which is the following: 
         ]
 
         # Step 4: Call OpenAI API
+        additional_params = {"temperature": temperature, "top_p": top_p}
+        if self.LLM_MODEL_TYPE == "gpt-5":
+            # gpt 5 contains only default temperature and top_p values and can not be set additionaly
+            additional_params = {}
         response_message = self.client.chat.completions.create(
             model=self.LLM_MODEL_TYPE,
-            top_p=top_p,
-            temperature=temperature,
             tools=self.get_tools(),
             tool_choice="auto",
-            messages=messages
+            messages=messages,
+            **additional_params
         )
 
         # Step 5: Check if any tool calls were triggered
