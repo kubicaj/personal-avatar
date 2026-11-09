@@ -3,13 +3,13 @@ import uuid
 import logging
 import sys
 import os
-import resend
 
 from openai import OpenAI
 from dotenv import load_dotenv
 from pypdf import PdfReader
 
 from guardrails import Guardrails, ValidationError
+from services.email_sender import EmailSender
 
 
 class PersonalAvatarLLM:
@@ -31,16 +31,18 @@ class PersonalAvatarLLM:
         self.cv_content = self.get_pdf_content("resources/CV_Juraj_Kubica.pdf")
         self._guardrails = Guardrails(self.client, self.LLM_MODEL_TYPE, 500)
         self._session_id = str(uuid.uuid4())
+        self.email_sender = EmailSender(logger=self.logger, session_id=self._session_id)
 
-        # Notify the owner that a new session has started
-        resend.api_key = os.getenv("RESEND_API_KEY")
-        resend.Emails.send({
-            "from": "interviewapp@resend.dev",  # Replace with a verified domain
-            "to": "kubica.juro@gmail.com",
-            "subject": "New conversation of personal avatar",
-            "html": f"<p>New conversation of personal avatar began with session id {self._session_id} "
-                    f"Check logs of https://huggingface.co/spaces/kubicajuraj/avatar_kubica</p>",
-        })
+        # Notify the owner that a new session has started. Email delivery is
+        # optional and must not prevent the chat session from starting.
+        self.email_sender.send(
+            to="kubica.juro@gmail.com",
+            subject="New conversation of personal avatar",
+            html=(
+                f"<p>New conversation of personal avatar began with session id {self._session_id} "
+                f"Check logs of https://huggingface.co/spaces/kubicajuraj/avatar_kubica</p>"
+            ),
+        )
 
     @staticmethod
     def init_logger():
@@ -98,7 +100,7 @@ class PersonalAvatarLLM:
         openai_api_key = os.getenv('OPENAI_API_KEY')
 
         if openai_api_key:
-            self.logger.info(f"OpenAI API Key exists and begins {openai_api_key[:8]}")
+            self.logger.info("OpenAI API key is configured")
         else:
             self.logger.info("OpenAI API Key not set - please head to the troubleshooting guide in the setup folder")
 
@@ -173,6 +175,7 @@ and inform user that email was send
 I prefer the following roles:
 - Senior Data engineer
 - Data Architect
+- AI Data Architect (MCPs, RAGs, LLMs, etc.)
 - Enterprise Architect
 - Technical Lead
 - AI engineer (I am very eager to learn all new about AI and I am training and learning daily about this area)
@@ -274,20 +277,23 @@ Try to adopt your communication to {name}'s personality which is the following: 
                 if tool_name == "send_email":
                     self.logger.info(
                         f"[{self._session_id}] Sending email to : {args['to']} with subject {args['subject']}")
-                    resend.api_key = os.getenv("RESEND_API_KEY")
-                    resend.Emails.send({
-                        "from": "interviewapp@resend.dev",  # Replace with verified domain
-                        "to": args["to"].lower(),
-                        "subject": args["subject"],
-                        "html": f"<p>{args['message']}</p>",
-                    })
+                    email_sent = self.email_sender.send(
+                        to=args["to"].lower(),
+                        subject=args["subject"],
+                        html=f"<p>{args['message']}</p>",
+                    )
+                    tool_result = (
+                        "Email has been successfully sent."
+                        if email_sent
+                        else "Email could not be sent because the email service is unavailable."
+                    )
 
                 # Add tool output to history (invisible to user, for GPT context)
                 messages.append({
                     "role": "tool",
                     "tool_call_id": tool_call.id,
                     "name": tool_name,
-                    "content": "Email has been successfully sent."
+                    "content": tool_result if tool_name == "send_email" else "Tool completed."
                 })
 
             # Step 6: Ask GPT to continue the conversation naturally
