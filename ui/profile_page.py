@@ -71,7 +71,6 @@ def build_profile_page(chat_callback, avatar_state):
                 gr.Image(
                     value="resources/photo.png",
                     show_label=False,
-                    buttons=[],
                     container=False,
                     interactive=False,
                     elem_id="profile-photo",
