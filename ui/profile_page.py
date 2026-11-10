@@ -5,7 +5,10 @@ import gradio as gr
 
 
 PAGE_CSS = Path(__file__).resolve().with_name("profile.css").read_text(encoding="utf-8")
-CV_PATH = Path(__file__).resolve().parents[1] / "resources" / "CV_Juraj_Kubica.pdf"
+RESOURCES_PATH = Path(__file__).resolve().parents[1] / "resources"
+CV_PATH = RESOURCES_PATH / "CV_Juraj_Kubica.pdf"
+PHOTO_PATH = RESOURCES_PATH / "photo.png"
+gr.set_static_paths(paths=[PHOTO_PATH])
 
 
 def build_profile_page(chat_callback, avatar_state):
@@ -68,11 +71,9 @@ def build_profile_page(chat_callback, avatar_state):
                     )
 
             with gr.Column(elem_id="profile-image-column"):
-                gr.Image(
-                    value="resources/photo.png",
-                    show_label=False,
-                    container=False,
-                    interactive=False,
+                gr.HTML(
+                    '<img src="/gradio_api/file=resources/photo.png" '
+                    'alt="Portrait of Juraj Kubica" loading="eager">',
                     elem_id="profile-photo",
                 )
 
