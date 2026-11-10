@@ -1,6 +1,5 @@
 import inspect
 from pathlib import Path
-from urllib.parse import quote
 
 import gradio as gr
 
@@ -8,9 +7,7 @@ import gradio as gr
 PAGE_CSS = Path(__file__).resolve().with_name("profile.css").read_text(encoding="utf-8")
 RESOURCES_PATH = Path(__file__).resolve().parents[1] / "resources"
 CV_PATH = RESOURCES_PATH / "CV_Juraj_Kubica.pdf"
-PHOTO_PATH = RESOURCES_PATH / "photo.png"
-gr.set_static_paths(paths=[PHOTO_PATH])
-PHOTO_URL_PATH = quote(PHOTO_PATH.as_posix(), safe="/:")
+PHOTO_URL = "https://huggingface.co/spaces/kubicajuraj/avatar_kubica/resolve/main/resources/photo.png"
 
 
 def build_profile_page(chat_callback, avatar_state):
@@ -74,7 +71,7 @@ def build_profile_page(chat_callback, avatar_state):
 
             with gr.Column(elem_id="profile-image-column"):
                 gr.HTML(
-                    f'<img src="/gradio_api/file={PHOTO_URL_PATH}" '
+                    f'<img src="{PHOTO_URL}" '
                     'alt="Portrait of Juraj Kubica" loading="eager">',
                     elem_id="profile-photo",
                 )
