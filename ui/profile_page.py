@@ -11,7 +11,7 @@ PHOTO_URL = "https://huggingface.co/spaces/kubicajuraj/avatar_kubica/resolve/mai
 
 
 def build_profile_page(chat_callback, avatar_state):
-    """Build the profile page and its embedded CV chat interface."""
+    """Build the recruiter profile page and embedded AI avatar chat."""
     with gr.Column(elem_id="cv-page"):
         with gr.Row(elem_id="cv-header"):
             gr.HTML("<div class='wordmark'>Juraj Kubica</div>")
@@ -34,13 +34,13 @@ def build_profile_page(chat_callback, avatar_state):
             with gr.Column(elem_id="profile-copy"):
                 gr.HTML(
                     """
-                    <div class="eyebrow">Data engineering · Architecture</div>
+                    <div class="eyebrow">Data platforms · AI enablement</div>
                     <h1>Senior Data Engineer &amp; Data Architect</h1>
-                    <div class="role-line">AI-ready data platforms · Market data · Semantic layers</div>
-                    <p class="profile-summary">I design cloud data platforms and integration frameworks. At Barclays, I work on Market Data onboarding, integration, and governance, and help make Market Data usable for AI through semantic layers. My recent work also includes RAG architectures and MCP for connecting LLMs with enterprise data and tools.</p>
+                    <div class="role-line">Market data · Semantic layers · AI-ready platforms</div>
+                    <p class="profile-summary">I build cloud data platforms and integration frameworks. At Barclays, I focus on Market Data onboarding, governance, and semantic layers that make data usable for AI. My recent work also includes RAG and MCP solutions for enterprise data and tools.</p>
                     <div class="current-role">
-                        <span class="current-role-label">Current role</span>
-                        <span class="current-role-title">VP, Senior Data Engineer at Barclays</span>
+                        <span class="current-role-label">Current</span>
+                        <span class="current-role-title">VP, Senior Data Engineer · Barclays</span>
                     </div>
                 """
                 )
@@ -58,11 +58,6 @@ def build_profile_page(chat_callback, avatar_state):
                     gr.HTML(
                         """
                         <a class="action-link chat-cta" href="#conversation-section" aria-label="Scroll to chat with my AI avatar">
-                            <svg class="action-link-icon" viewBox="0 0 24 24" aria-hidden="true">
-                                <circle cx="12" cy="12" r="9.25" />
-                                <circle cx="12" cy="9" r="2.7" />
-                                <path d="M6.8 17.7c.8-2.4 2.6-3.7 5.2-3.7s4.4 1.3 5.2 3.7" />
-                            </svg>
                             <span>Chat with my AI avatar</span>
                             <svg class="action-link-icon action-link-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6" /></svg>
                         </a>
@@ -71,8 +66,8 @@ def build_profile_page(chat_callback, avatar_state):
 
             with gr.Column(elem_id="profile-image-column"):
                 gr.HTML(
-                    f'<img src="{PHOTO_URL}" '
-                    'alt="Portrait of Juraj Kubica" loading="eager">',
+                    f'<div class="portrait-frame"><img src="{PHOTO_URL}" '
+                    'alt="Portrait of Juraj Kubica" loading="eager"></div>',
                     elem_id="profile-photo",
                 )
 
@@ -200,7 +195,7 @@ def build_profile_page(chat_callback, avatar_state):
             <section id="certifications" aria-labelledby="certifications-title">
                 <h2 id="certifications-title">Certifications</h2>
                 <div class="certification-list">
-                    <a href="https://www.credly.com/badges/119f348b-e6b8-4e7f-a245-d6e9ef70e252/linked_in_profile" target="_blank" rel="noopener noreferrer">
+                    <a href="https://www.credly.com/badges/119f348b-e6b8-4e7f-a245-d6e9ef70e252/linked_in_profile" target="_blank" rel="noopener noreferrer" aria-label="View AWS Certified AI Practitioner credential (opens in a new tab)">
                         <span class="credential-logo aws" role="img" aria-label="AWS logo">
                             <svg viewBox="0 0 48 34" aria-hidden="true" focusable="false">
                                 <text x="3" y="21" fill="#263747" font-family="Arial, sans-serif" font-size="19" font-weight="700" letter-spacing="-1.1">aws</text>
@@ -209,9 +204,9 @@ def build_profile_page(chat_callback, avatar_state):
                             </svg>
                         </span>
                         <span class="credential-name">AWS Certified AI Practitioner</span>
-                        <svg class="credential-arrow" viewBox="0 0 16 16" aria-hidden="true"><path d="M5 3h8v8M13 3 4 12" /></svg>
+                        <span class="credential-action">View credential <svg class="credential-arrow" viewBox="0 0 16 16" aria-hidden="true"><path d="M5 3h8v8M13 3 4 12" /></svg></span>
                     </a>
-                    <a href="https://www.credly.com/badges/4547e28b-0e4d-4811-a78b-80664f3281f6/linked_in_profile" target="_blank" rel="noopener noreferrer">
+                    <a href="https://www.credly.com/badges/4547e28b-0e4d-4811-a78b-80664f3281f6/linked_in_profile" target="_blank" rel="noopener noreferrer" aria-label="View AWS Certified Solutions Architect credential (opens in a new tab)">
                         <span class="credential-logo aws" role="img" aria-label="AWS logo">
                             <svg viewBox="0 0 48 34" aria-hidden="true" focusable="false">
                                 <text x="3" y="21" fill="#263747" font-family="Arial, sans-serif" font-size="19" font-weight="700" letter-spacing="-1.1">aws</text>
@@ -220,9 +215,9 @@ def build_profile_page(chat_callback, avatar_state):
                             </svg>
                         </span>
                         <span class="credential-name">AWS Certified Solutions Architect - Associate</span>
-                        <svg class="credential-arrow" viewBox="0 0 16 16" aria-hidden="true"><path d="M5 3h8v8M13 3 4 12" /></svg>
+                        <span class="credential-action">View credential <svg class="credential-arrow" viewBox="0 0 16 16" aria-hidden="true"><path d="M5 3h8v8M13 3 4 12" /></svg></span>
                     </a>
-                    <a href="https://credentials.databricks.com/570769bc-33ab-45c6-ae1a-e55d65c80ef6#acc.x7TBcOJH" target="_blank" rel="noopener noreferrer">
+                    <a href="https://credentials.databricks.com/570769bc-33ab-45c6-ae1a-e55d65c80ef6#acc.x7TBcOJH" target="_blank" rel="noopener noreferrer" aria-label="View Databricks Data Engineer Professional credential (opens in a new tab)">
                         <span class="credential-logo databricks" role="img" aria-label="Databricks logo">
                             <svg viewBox="0 0 40 40" aria-hidden="true" focusable="false">
                                 <path d="m20 4 14 8-14 8-14-8 14-8Z" fill="none" stroke="#e64a35" stroke-linejoin="round" stroke-width="2.8" />
@@ -230,9 +225,9 @@ def build_profile_page(chat_callback, avatar_state):
                             </svg>
                         </span>
                         <span class="credential-name">Databricks Certified Data Engineer Professional</span>
-                        <svg class="credential-arrow" viewBox="0 0 16 16" aria-hidden="true"><path d="M5 3h8v8M13 3 4 12" /></svg>
+                        <span class="credential-action">View credential <svg class="credential-arrow" viewBox="0 0 16 16" aria-hidden="true"><path d="M5 3h8v8M13 3 4 12" /></svg></span>
                     </a>
-                    <a href="https://credentials.databricks.com/4942430e-b1e0-417d-87bd-b0cd702be874#acc.oJ02CVHi" target="_blank" rel="noopener noreferrer">
+                    <a href="https://credentials.databricks.com/4942430e-b1e0-417d-87bd-b0cd702be874#acc.oJ02CVHi" target="_blank" rel="noopener noreferrer" aria-label="View Databricks Data Engineer Associate credential (opens in a new tab)">
                         <span class="credential-logo databricks" role="img" aria-label="Databricks logo">
                             <svg viewBox="0 0 40 40" aria-hidden="true" focusable="false">
                                 <path d="m20 4 14 8-14 8-14-8 14-8Z" fill="none" stroke="#e64a35" stroke-linejoin="round" stroke-width="2.8" />
@@ -240,7 +235,7 @@ def build_profile_page(chat_callback, avatar_state):
                             </svg>
                         </span>
                         <span class="credential-name">Databricks Certified Data Engineer Associate</span>
-                        <svg class="credential-arrow" viewBox="0 0 16 16" aria-hidden="true"><path d="M5 3h8v8M13 3 4 12" /></svg>
+                        <span class="credential-action">View credential <svg class="credential-arrow" viewBox="0 0 16 16" aria-hidden="true"><path d="M5 3h8v8M13 3 4 12" /></svg></span>
                     </a>
                 </div>
             </section>
@@ -251,25 +246,60 @@ def build_profile_page(chat_callback, avatar_state):
             with gr.Column(elem_id="conversation-intro"):
                 gr.HTML(
                     """
-                    <div class="section-label">AI avatar</div>
-                    <h2>Ask about my experience</h2>
-                    <p>Chat with my AI avatar about a project, technology, role, or certification listed on this page.</p>
-                    <div class="conversation-hint">Replies are based on my CV and professional profile.</div>
+                    <div class="section-label">OPTIONAL · AI AVATAR</div>
+                    <h2>Talk with my AI avatar</h2>
+                    <p>Ask about my roles, projects, tools, or certifications. Answers are based on the CV and profile on this page.</p>
+                    <div class="suggestion-heading">Example questions</div>
                     """
                 )
+                prompt_specs = [
+                    (
+                        "Cloud technologies",
+                        "What cloud technologies have you worked with?",
+                    ),
+                    ("AI in your work", "How are you using AI in your work?"),
+                    (
+                        "Data engineering platforms",
+                        "Which data engineering platforms have you worked with?",
+                    ),
+                    (
+                        "Data engineering projects",
+                        "What is your most significant data engineering project?",
+                    ),
+                ]
+                prompt_buttons = []
+                with gr.Column(elem_id="chat-prompts"):
+                    for label, prompt in prompt_specs:
+                        prompt_buttons.append(
+                            (
+                                gr.Button(label, variant="secondary", elem_classes=["chat-prompt"]),
+                                prompt,
+                            )
+                        )
 
             with gr.Column(elem_id="conversation-card"):
+                gr.HTML(
+                    """
+                    <div class="chat-card-header">
+                        <span class="chat-status-dot" aria-hidden="true"></span>
+                        <div>
+                            <strong>Juraj’s AI avatar</strong>
+                            <span>Ask a question to start</span>
+                        </div>
+                    </div>
+                    """
+                )
                 chatbot_kwargs = {
                     "elem_id": "chatbot",
                     "show_label": False,
-                    "height": 300,
+                    "height": 280,
                     "min_height": 260,
                     "layout": "panel",
                     "buttons": [],
                     "placeholder": (
-                        "<div style='text-align:center; padding: 28px 16px;'>"
-                        "<div style='font-size: 15px; font-weight: 600; color: #1e2937;'>Ask a question about my work</div>"
-                        "<div style='margin-top: 7px; color: #596678;'>For example: “What data engineering experience do you have?”</div>"
+                        "<div class='chat-empty-state'>"
+                        "<strong>Your conversation will appear here</strong>"
+                        "<span>Choose an example or ask your own question below.</span>"
                         "</div>"
                     ),
                 }
@@ -282,28 +312,51 @@ def build_profile_page(chat_callback, avatar_state):
                     if key in chatbot_signature.parameters
                 }
 
+                textbox_parameters = inspect.signature(gr.Textbox).parameters
+                textbox_kwargs = {
+                    "placeholder": "Ask a question and press Enter…",
+                    "show_label": False,
+                    "lines": 1,
+                }
+                if "submit_btn" in textbox_parameters:
+                    textbox_kwargs["submit_btn"] = False
+                if "stop_btn" in textbox_parameters:
+                    textbox_kwargs["stop_btn"] = False
+                textbox = gr.Textbox(**textbox_kwargs)
+
                 chat_kwargs = {
                     "fn": chat_callback,
                     "additional_inputs": [avatar_state],
                     "chatbot": gr.Chatbot(**chatbot_kwargs),
-                    "textbox": gr.Textbox(
-                        placeholder="Ask about my experience…",
-                        show_label=False,
-                        lines=1,
-                    ),
+                    "textbox": textbox,
                     "title": None,
-                    "submit_btn": "Send",
-                    "stop_btn": False,
                 }
                 chat_signature = inspect.signature(gr.ChatInterface)
                 if "type" in chat_signature.parameters:
                     chat_kwargs["type"] = "messages"
+                if (
+                    "submit_btn" not in textbox_parameters
+                    and "submit_btn" in chat_signature.parameters
+                ):
+                    chat_kwargs["submit_btn"] = False
+                if (
+                    "stop_btn" not in textbox_parameters
+                    and "stop_btn" in chat_signature.parameters
+                ):
+                    chat_kwargs["stop_btn"] = False
                 chat_kwargs = {
                     key: value
                     for key, value in chat_kwargs.items()
                     if key in chat_signature.parameters
                 }
                 gr.ChatInterface(**chat_kwargs)
+                for button, prompt in prompt_buttons:
+                    button.click(
+                        fn=lambda question=prompt: question,
+                        inputs=None,
+                        outputs=[textbox],
+                        queue=False,
+                    )
 
         gr.HTML(
             """

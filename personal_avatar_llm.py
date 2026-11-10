@@ -18,7 +18,7 @@ class PersonalAvatarLLM:
     Handles chat processing, email interaction, and CV-based conversation.
     """
 
-    LLM_MODEL_TYPE = "gpt-4.1"
+    LLM_MODEL_TYPE = "gpt-6-luna"
 
     def __init__(self):
         """
@@ -175,7 +175,7 @@ and inform user that email was send
 I prefer the following roles:
 - Senior Data engineer
 - Data Architect
-- AI Data Architect (MCPs, RAGs, LLMs, etc.)
+- AI Data Architect (MCPs (I have prod experiences involving semantic layers), RAGs (mainly previous position), LLMs, etc.)
 - Enterprise Architect
 - Technical Lead
 - AI engineer (I am very eager to learn all new about AI and I am training and learning daily about this area)
@@ -200,7 +200,9 @@ knowledge, and mainly to the role which will bring value to the customer.
    but you are open to new interesting opportunities—particularly leading or architectural positions in 
    data or software engineering, ideally with a connection to AI/LLMs. 
 8. Do not repeat your name in each answer. It is enough to introduce yourself once.
-
+9. If somone asks you to send email to your author or to you, then send email and inform user that email was send but before sending email ask user to provide you contacts so author can contact him back. It is not mandatory to provide contacts but it is recommended. If user will not provide contacts then send email without contacts and inform user about this.
+10. Always send email only to author and noone else - kubica.juro@gmail.com but do not send repetitive emails within the same session in order to avoid spamming. If user will ask you to send email again then inform user that email was already sent and you will not send it again in order to avoid spamming.
+11. I am using AI daily within my work and I am very interested in AI and LLMs. I am learning about this area daily and I am very eager to learn more about this area. I have experiences with dev AI tools like Claude code (work) and Codex (personal usage)
 ## Summary:
 
 {self.get_avatar_role()}
@@ -216,7 +218,7 @@ Try to adopt your communication to {name}'s personality which is the following: 
 """
         return system_prompt
 
-    def chat_callback_function(self, message, history, top_p: float, temperature: float) -> str:
+    def chat_callback_function(self, message, history) -> str:
         """
         Handle a chat message by validating input, calling OpenAI API, optionally invoking tools (like sending email),
         and continuing the conversation naturally.
@@ -224,9 +226,6 @@ Try to adopt your communication to {name}'s personality which is the following: 
         Args:
             message (str): The user input message
             history (list): Previous conversation history
-            top_p (float): Nucleus sampling parameter for model diversity
-            temperature (float): Controls randomness in response generation
-
         Returns:
             Final assistant message (str) to be shown to the user
         """
@@ -247,16 +246,15 @@ Try to adopt your communication to {name}'s personality which is the following: 
         ]
 
         # Step 4: Call OpenAI API
-        additional_params = {"temperature": temperature, "top_p": top_p}
-        if self.LLM_MODEL_TYPE == "gpt-5":
-            # gpt 5 contains only default temperature and top_p values and can not be set additionaly
-            additional_params = {}
+        request_options = {}
+        if self.LLM_MODEL_TYPE == "gpt-6-luna":
+            request_options["reasoning_effort"] = "none"
         response_message = self.client.chat.completions.create(
             model=self.LLM_MODEL_TYPE,
             tools=self.get_tools(),
             tool_choice="auto",
             messages=messages,
-            **additional_params
+            **request_options,
         )
 
         # Step 5: Check if any tool calls were triggered
@@ -299,8 +297,6 @@ Try to adopt your communication to {name}'s personality which is the following: 
             # Step 6: Ask GPT to continue the conversation naturally
             follow_up = self.client.chat.completions.create(
                 model=self.LLM_MODEL_TYPE,
-                top_p=top_p,
-                temperature=temperature,
                 messages=messages
             )
             answer = follow_up.choices[0].message.content

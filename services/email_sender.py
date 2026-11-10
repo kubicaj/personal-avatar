@@ -31,7 +31,7 @@ class EmailSender:
         if not self.api_key:
             self._log_warning("RESEND_API_KEY is not configured; skipping email")
             return False
-
+        self.logger.info("Sending email via Resend from %s to %s with subject %s", from_email, to, subject)
         resend.api_key = self.api_key
         try:
             resend.Emails.send({

@@ -7,15 +7,10 @@ from ui.profile_page import PAGE_CSS, build_profile_page
 
 
 class RecruiterProfileApp:
-    """Recruiter-first profile page with an optional CV chat assistant."""
+    """Main recruiter profile page with a CV download and guided AI avatar chat."""
 
     def chat(self, message, history, avatar: PersonalAvatarLLM) -> str:
-        return avatar.chat_callback_function(
-            message,
-            history,
-            top_p=0.3,
-            temperature=0.5,
-        )
+        return avatar.chat_callback_function(message, history)
 
     def start_application(self):
         launch_signature = inspect.signature(gr.Blocks.launch)
