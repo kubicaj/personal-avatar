@@ -266,6 +266,10 @@ def build_profile_page(chat_callback, avatar_state):
                         "Data engineering projects",
                         "What is your most significant data engineering project?",
                     ),
+                    (
+                        "New opportunities",
+                        "Are you open to new opportunities?",
+                    ),
                 ]
                 prompt_buttons = []
                 with gr.Column(elem_id="chat-prompts"):
