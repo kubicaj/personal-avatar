@@ -37,7 +37,7 @@ def build_profile_page(chat_callback, avatar_state):
                     <div class="eyebrow">Data platforms · AI enablement</div>
                     <h1>Senior Data Engineer &amp; Data Architect</h1>
                     <div class="role-line">Market data · Semantic layers · AI-ready platforms</div>
-                    <p class="profile-summary">I build cloud data platforms and integration frameworks. At Barclays, I focus on Market Data onboarding, governance, and semantic layers that make data usable for AI. My recent work also includes RAG and MCP solutions for enterprise data and tools.</p>
+                    <p class="profile-summary">I build cloud data platforms and integration frameworks, and led a major data integration initiative. At Barclays, I’ve taken ownership of the Snowflake platform for Market Data, with a focus on onboarding, governance, and semantic layers. I’m also growing my AI expertise while preparing trusted data for practical AI use.</p>
                     <div class="current-role">
                         <span class="current-role-label">Current</span>
                         <span class="current-role-title">VP, Senior Data Engineer · Barclays</span>
@@ -80,7 +80,7 @@ def build_profile_page(chat_callback, avatar_state):
                 </div>
                 <div class="expertise-item">
                     <strong>AI data enablement</strong>
-                    <span>Semantic layers, RAG, and MCP for enterprise data</span>
+                    <span>Preparing trusted, well-structured data for AI use</span>
                 </div>
                 <div class="expertise-item">
                     <strong>Architecture &amp; integration</strong>
@@ -105,7 +105,7 @@ def build_profile_page(chat_callback, avatar_state):
                                 <span class="company-logo barclays" aria-hidden="true">B</span>
                                 <span class="experience-company">Barclays</span>
                             </div>
-                            <span class="experience-dates">Nov 2025 - Present</span>
+                            <span class="experience-dates">Dec 2025 - Present</span>
                         </div>
                         <div>
                             <h3>VP, Senior Data Engineer</h3>
@@ -292,15 +292,14 @@ def build_profile_page(chat_callback, avatar_state):
                 chatbot_kwargs = {
                     "elem_id": "chatbot",
                     "show_label": False,
+                    "render": False,
                     "height": 280,
                     "min_height": 260,
                     "layout": "panel",
                     "buttons": [],
                     "placeholder": (
-                        "<div class='chat-empty-state'>"
-                        "<strong>Your conversation will appear here</strong>"
-                        "<span>Choose an example or ask your own question below.</span>"
-                        "</div>"
+                        "<strong>Your conversation will appear here</strong><br>"
+                        "<span>Choose a prompt or type your own question below.</span>"
                     ),
                 }
                 chatbot_signature = inspect.signature(gr.Chatbot)
@@ -317,6 +316,7 @@ def build_profile_page(chat_callback, avatar_state):
                     "placeholder": "Ask a question and press Enter…",
                     "show_label": False,
                     "lines": 1,
+                    "render": False,
                 }
                 if "submit_btn" in textbox_parameters:
                     textbox_kwargs["submit_btn"] = False

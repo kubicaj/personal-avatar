@@ -804,29 +804,6 @@ body {
     font-size: 11px;
 }
 
-.chat-empty-state {
-    display: flex;
-    min-height: 215px;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 7px;
-    padding: 20px;
-    color: var(--muted);
-    text-align: center;
-}
-
-.chat-empty-state strong {
-    color: var(--ink);
-    font-size: 14px;
-    font-weight: 600;
-}
-
-.chat-empty-state span {
-    font-size: 12px;
-    line-height: 1.5;
-}
-
 #conversation-card #chatbot {
     height: 300px !important;
     border: 0 !important;
@@ -1093,11 +1070,6 @@ body {
 
     #conversation-card #chatbot {
         height: 250px !important;
-    }
-
-    .chat-empty-state {
-        min-height: 180px;
-        padding: 16px 10px;
     }
 
     .credential-action {
